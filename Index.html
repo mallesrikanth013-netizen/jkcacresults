@@ -1,7 +1,37 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+<head>
+<title>JKC College Results</title>
+</head>
+
 <body>
+
 <h2>JKC College Results</h2>
-<p>Website Working</p>
+
+<input type="text" id="hallticket" placeholder="Enter Hall Ticket">
+<button onclick="checkResult()">Get Result</button>
+
+<p id="result"></p>
+
+<script>
+function checkResult(){
+
+var ht=document.getElementById("hallticket").value;
+
+if(ht=="250758"){
+document.getElementById("result").innerHTML="Malle Srikanth - PASS";
+}
+
+else if(ht=="250742"){
+document.getElementById("result").innerHTML="Gurijala Veeranjaneyulu Reddy - FAIL";
+}
+
+else{
+document.getElementById("result").innerHTML="Result Not Found";
+}
+
+}
+</script>
+
 </body>
 </html>
