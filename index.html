@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
 <title>JKC College Results Portal</title>
 
 <style>
-
 body{
 font-family:Arial;
 background:#f5f5f5;
@@ -12,34 +11,17 @@ padding:20px;
 text-align:center;
 }
 
-h1{
-color:red;
-margin-bottom:5px;
-}
+h1{color:red;margin-bottom:5px;}
 
-.subtitle{
-color:#555;
-margin-bottom:30px;
-}
+.subtitle{color:#555;margin-bottom:30px;}
 
-.searchbox{
-margin-bottom:20px;
-}
+.searchbox{margin-bottom:20px;}
 
-input{
-padding:10px;
-font-size:16px;
-}
+input{padding:10px;font-size:16px;}
 
-button{
-padding:10px 15px;
-margin:5px;
-cursor:pointer;
-}
+button{padding:10px 15px;margin:5px;cursor:pointer;}
 
-#resultBox{
-margin-top:20px;
-}
+#resultBox{margin-top:20px;}
 
 .student-info{
 background:white;
@@ -63,23 +45,12 @@ padding:10px;
 text-align:center;
 }
 
-th{
-background:#eee;
-}
+th{background:#eee;}
 
-.pass{
-color:green;
-font-weight:bold;
-}
+.pass{color:green;font-weight:bold;}
+.fail{color:red;font-weight:bold;}
 
-.fail{
-color:red;
-font-weight:bold;
-}
-
-.actions{
-margin-top:15px;
-}
+.actions{margin-top:15px;}
 
 .reval-box{
 background:white;
@@ -97,7 +68,6 @@ justify-content:space-between;
 border-bottom:1px solid #ddd;
 padding:8px;
 }
-
 </style>
 
 </head>
@@ -117,133 +87,39 @@ padding:8px;
 <script>
 
 const studentDB={
- "250701": { name: "SUPRIYA VANKAYALAPATI", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "29/40", see: "31/60", total: 60, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "34/40", see: "37/60", total: 71, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "29/40", see: "33/60", total: 62, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "20/40", see: "24/60", total: 44, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "7/10", see: "25/40", total: 32, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "25/40", see: "35/60", total: 60, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "20/40", total: 30, res: "P"}
-]},
-"250702": { name: "ACHARAM GNANA LAKSHMI SOUNDARYA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "32/40", see: "35/60", total: 67, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "30/40", see: "47/60", total: 77, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "29/40", see: "35/60", total: 64, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "17/40", see: "28/60", total: 45, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "7/10", see: "24/40", total: 31, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "25/40", see: "30/60", total: 55, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "20/40", total: 30, res: "P"}
-]},
-"250703": { name: "BADISA BHANU SUPRAJA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "33/40", see: "38/60", total: 71, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "34/40", see: "36/60", total: 70, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "32/40", see: "42/60", total: 74, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "29/40", see: "38/60", total: 67, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "8/10", see: "31/40", total: 39, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "28/40", see: "47/60", total: 75, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "20/40", total: 30, res: "P"}
-]},
-"250704": { name: "BONTHA BUELA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "35/40", see: "53/60", total: 88, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "40/40", see: "50/60", total: 90, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "33/40", see: "46/60", total: 79, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "32/40", see: "43/60", total: 75, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "10/10", see: "38/40", total: 48, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "35/40", see: "48/60", total: 83, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "30/40", total: 40, res: "P"}
-]},
-"250705": { name: "CHINTHA KAVYA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "38/40", see: "49/60", total: 87, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "40/40", see: "54/60", total: 94, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "36/40", see: "33/60", total: 69, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "33/40", see: "40/60", total: 73, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "10/10", see: "39/40", total: 49, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "36/40", see: "37/60", total: 73, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "30/40", total: 40, res: "P"}
-]},
-"250706": { name: "CHITTURI LAKSHMI NAGA SUREKHA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "36/40", see: "52/60", total: 88, res: "P"},
-    {code: "100425", name: "POETRY, PROSE & GRAMMAR", cia: "36/40", see: "52/60", total: 88, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "35/40", see: "43/60", total: 78, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "26/40", see: "35/60", total: 61, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "9/10", see: "31/40", total: 40, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "28/40", see: "40/60", total: 68, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "26/40", total: 36, res: "P"}
-]},
-"250707": { name: "DAKKA SAI SRI LEKHA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "33/40", see: "55/60", total: 88, res: "P"},
-    {code: "100425", name: "POETRY, PROSE & GRAMMAR", cia: "37/40", see: "55/60", total: 92, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "36/40", see: "33/60", total: 69, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "33/40", see: "42/60", total: 75, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "9/10", see: "34/40", total: 43, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "32/40", see: "32/60", total: 64, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "27/40", total: 37, res: "P"}
-]},
-"250708": { name: "DODDA MADHURI", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "33/40", see: "46/60", total: 79, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "28/40", see: "26/60", total: 54, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "28/40", see: "32/60", total: 60, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "26/40", see: "31/60", total: 57, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "8/10", see: "30/40", total: 38, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "24/40", see: "27/60", total: 51, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "27/40", total: 37, res: "P"}
-]},
-"250709": { name: "DUGGEMPUDI THIRAPATHAMMA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "33/40", see: "38/60", total: 71, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "36/40", see: "41/60", total: 77, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "34/40", see: "47/60", total: 81, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "29/40", see: "30/60", total: 59, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "8/10", see: "32/40", total: 40, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "28/40", see: "49/60", total: 77, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "29/40", total: 39, res: "P"}
-]},
-"250710": { name: "EGGONI MADHAVI", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "29/40", see: "45/60", total: 74, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "33/40", see: "46/60", total: 79, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "35/40", see: "43/60", total: 78, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "30/40", see: "46/60", total: 76, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "9/10", see: "33/40", total: 42, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "29/40", see: "39/60", total: 68, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "32/40", total: 42, res: "P"}
-]},
-"250711": { name: "GONDI AKHILA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "27/40", see: "30/60", total: 57, res: "P"},
-    {code: "100425", name: "POETRY, PROSE & GRAMMAR", cia: "31/40", see: "45/60", total: 76, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "29/40", see: "34/60", total: 63, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "27/40", see: "34/60", total: 61, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "8/10", see: "34/40", total: 42, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "24/40", see: "44/60", total: 68, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "20/40", total: 30, res: "P"}
-]},
-"250712": { name: "GUNDIGA PRASANNA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "30/40", see: "32/60", total: 62, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "30/40", see: "32/60", total: 62, res: "P"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "28/40", see: "43/60", total: 71, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "21/40", see: "30/60", total: 51, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "7/10", see: "23/40", total: 30, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "22/40", see: "36/60", total: 58, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "18/40", total: 28, res: "P"}
-]},
-"250713": { name: "KARNATI NAVYA", results: [
-    {code: "100125", name: "ENGLISH BRIDGE-I: LIFE SKILLS", cia: "30/40", see: "35/60", total: 65, res: "P"},
-    {code: "100225", name: "SAHITHI VASANTHAM", cia: "30/40", see: "17/60", total: 47, res: "F"},
-    {code: "101125", name: "AI FUNDAMENTALS", cia: "31/40", see: "33/60", total: 64, res: "P"},
-    {code: "111925", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION", cia: "27/40", see: "24/60", total: 51, res: "P"},
-    {code: "1119P25", name: "COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION LAB", cia: "8/10", see: "34/40", total: 42, res: "P"},
-    {code: "112025", name: "PROBLEM SOLVING USING C", cia: "25/40", see: "27/60", total: 52, res: "P"},
-    {code: "1120P25", name: "PROBLEM SOLVING USING C LAB", cia: "10/10", see: "18/40", total: 28, res: "P"}
-]},
 
-  // NEXT STUDENT DATA ADD HERE
+"250701":{
+name:"SUPRIYA VANKAYALAPATI",
+results:[
+{code:"100125",name:"ENGLISH BRIDGE-I: LIFE SKILLS",total:60,res:"P"},
+{code:"100225",name:"SAHITHI VASANTHAM",total:71,res:"P"},
+{code:"101125",name:"AI FUNDAMENTALS",total:62,res:"P"},
+{code:"111925",name:"COMPUTER FUNDAMENTALS AND OFFICE AUTOMATION",total:44,res:"P"},
+{code:"1119P25",name:"COMPUTER FUNDAMENTALS LAB",total:32,res:"P"},
+{code:"112025",name:"PROBLEM SOLVING USING C",total:60,res:"P"},
+{code:"1120P25",name:"C LAB",total:30,res:"P"}
+]
+},
 
+"250702":{
+name:"ACHARAM GNANA LAKSHMI SOUNDARYA",
+results:[
+{code:"100125",name:"ENGLISH BRIDGE-I",total:67,res:"P"},
+{code:"100225",name:"SAHITHI VASANTHAM",total:77,res:"P"},
+{code:"101125",name:"AI FUNDAMENTALS",total:64,res:"P"},
+{code:"111925",name:"COMPUTER FUNDAMENTALS",total:45,res:"P"},
+{code:"1119P25",name:"COMPUTER LAB",total:31,res:"P"},
+{code:"112025",name:"C PROGRAMMING",total:55,res:"P"},
+{code:"1120P25",name:"C LAB",total:30,res:"P"}
+]
+},
+ // Next student data will be add here 
+  
 };
-
-
 
 function showResult(){
 
-let reg=document.getElementById("regno").value;
+let reg=document.getElementById("regno").value.trim();
 let student=studentDB[reg];
 let box=document.getElementById("resultBox");
 
@@ -260,9 +136,7 @@ html+=`
 <div class="student-info">
 
 <b>Student Name :</b> ${student.name}<br>
-<b>Registration Number :</b> ${reg}<br>
-<b>Course :</b> ${student.course}<br>
-<b>Semester :</b> ${student.semester}
+<b>Registration Number :</b> ${reg}
 
 <table>
 <tr>
@@ -274,15 +148,15 @@ html+=`
 
 student.results.forEach(r=>{
 
-let status=r.marks>=21?"PASS":"FAIL";
-let cls=r.marks>=21?"pass":"fail";
+let status=r.res=="P"?"PASS":"FAIL";
+let cls=r.res=="P"?"pass":"fail";
 
-total+=r.marks;
+total+=r.total;
 
 html+=`
 <tr>
-<td>${r.subject}</td>
-<td>${r.marks}</td>
+<td>${r.name}</td>
+<td>${r.total}</td>
 <td class="${cls}">${status}</td>
 </tr>
 `;
@@ -291,22 +165,38 @@ html+=`
 
 html+=`</table>
 
+<h3>Total Marks : ${total}</h3>
+
 <div class="actions">
-
 <button onclick="window.print()">Print Result</button>
-
 <button onclick="downloadResult()">Download Result</button>
-
 </div>
 
 </div>
-
 `;
 
+box.innerHTML=html;
 
+}
 
-/* REVALUATION WINDOW */
+function downloadResult(){
 
+let content=document.getElementById("resultBox").innerText;
+
+let blob=new Blob([content],{type:"text/plain"});
+
+let a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+a.download="JKC_Result.txt";
+a.click();
+
+}
+
+</script>
+
+</body>
+</html>
 html+=`
 
 <div class="reval-box">
@@ -319,12 +209,14 @@ html+=`
 
 `;
 
-student.results.forEach(r=>{
+student.results.forEach((r,i)=>{
 
 html+=`
 <div class="subject-row">
+
 <label>
-<input type="checkbox"> ${r.subject}
+<input type="checkbox" class="revsub" value="${r.name}">
+${r.name}
 </label>
 
 <span>₹750</span>
@@ -338,35 +230,93 @@ html+=`
 
 <br>
 
-<button>Submit Revaluation</button>
+<button onclick="applyRevaluation('${reg}')">Proceed To Payment</button>
+
+</div>
+
+`;
+function applyRevaluation(reg){
+
+let subjects=document.querySelectorAll(".revsub:checked");
+
+if(subjects.length==0){
+alert("Please select subjects for revaluation");
+return;
+}
+
+let total=subjects.length*750;
+
+let list="";
+
+subjects.forEach(s=>{
+list+=`<li>${s.value}</li>`;
+});
+
+let box=document.getElementById("resultBox");
+
+box.innerHTML=`
+
+<div class="student-info">
+
+<h2>Revaluation Payment</h2>
+
+<b>Registration Number :</b> ${reg}
+
+<h3>Selected Subjects</h3>
+
+<ul>${list}</ul>
+
+<h3>Total Fee : ₹${total}</h3>
+
+<hr>
+
+<h3>Payment Details</h3>
+
+Bank : UNION BANK<br>
+Account Number : <b>020312120000010</b><br>
+IFSC : <b>UBIN0802034</b>
+
+<br><br>
+
+<b>Enter UTR Number</b><br>
+
+<input type="text" id="utr" placeholder="Enter UTR Number">
+
+<br><br>
+
+<button onclick="submitReval()">Submit Payment</button>
 
 </div>
 
 `;
 
-box.innerHTML=html;
-
 }
 
+function submitReval(){
 
+let utr=document.getElementById("utr").value;
 
-function downloadResult(){
-
-let content=document.getElementById("resultBox").innerText;
-
-let blob=new Blob([content],{type:"text/plain"});
-
-let a=document.createElement("a");
-
-a.href=URL.createObjectURL(blob);
-
-a.download="JKC_Result.txt";
-
-a.click();
-
+if(!utr){
+alert("Enter UTR Number");
+return;
 }
 
-</script>
+let box=document.getElementById("resultBox");
 
-</body>
-</html>
+box.innerHTML=`
+
+<div class="student-info">
+
+<h2 style="color:green">Revaluation Submitted Successfully</h2>
+
+<b>UTR Number :</b> ${utr}
+
+<br><br>
+
+Your revaluation request has been recorded.
+
+</div>
+
+`;
+
+}
