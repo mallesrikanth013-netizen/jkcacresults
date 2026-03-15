@@ -118,7 +118,69 @@ results:[
 };
 
 function showResult(){
-    html+=`
+
+let reg=document.getElementById("regno").value.trim();
+let student=studentDB[reg];
+let box=document.getElementById("resultBox");
+
+if(!student){
+box.innerHTML="<h3 style='color:red'>Student Not Found</h3>";
+return;
+}
+
+let html="";
+
+html+=`
+<div class="student-info">
+
+<b>Student Name :</b> ${student.name}<br>
+<b>Registration Number :</b> ${reg}
+
+<table>
+<tr>
+<th>Code</th>
+<th>Subject</th>
+<th>CIA</th>
+<th>SEE</th>
+<th>Total</th>
+<th>Status</th>
+</tr>
+`;
+
+student.results.forEach(r=>{
+
+let status=r.res=="P"?"PASS":"FAIL";
+let cls=r.res=="P"?"pass":"fail";
+
+html+=`
+<tr>
+<td>${r.code}</td>
+<td>${r.name}</td>
+<td>${r.cia}</td>
+<td>${r.see}</td>
+<td>${r.total}</td>
+<td class="${cls}">${status}</td>
+</tr>
+`;
+
+});
+
+html+=`</table>
+
+<div class="actions">
+
+<button onclick="window.print()">Print Result</button>
+
+<button onclick="downloadResult()">Download Result</button>
+
+</div>
+
+</div>
+`;
+
+/* REVALUATION SECTION */
+
+html+=`
 
 <div class="reval-box">
 
@@ -156,50 +218,69 @@ html+=`
 </div>
 
 `;
-    function applyRevaluation(reg){
+
+box.innerHTML=html;
+
+}
+
+/* DOWNLOAD RESULT */
+
+function downloadResult(){
+
+let content=document.getElementById("resultBox").innerText;
+
+let blob=new Blob([content],{type:"text/plain"});
+
+let a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+
+a.download="JKC_Result.txt";
+
+a.click();
+
+}
+
+/* PAYMENT PAGE */
+
+function applyRevaluation(reg){
 
 let subjects=document.querySelectorAll(".revsub:checked");
 
 if(subjects.length==0){
-alert("Please select subjects for revaluation");
+alert("Please select at least one subject");
 return;
 }
 
 let total=subjects.length*750;
 
-let list="";
-
-subjects.forEach(s=>{
-list+=`<li>${s.value}</li>`;
-});
-
 let box=document.getElementById("resultBox");
 
-box.innerHTML=`
+let html="";
 
-<div class="student-info">
+html+=`
+
+<div class="reval-box">
 
 <h2>Revaluation Payment</h2>
 
 <b>Registration Number :</b> ${reg}
 
-<h3>Selected Subjects</h3>
+<br><br>
 
-<ul>${list}</ul>
-
-<h3>Total Fee : ₹${total}</h3>
-
-<hr>
-
-<h3>Payment Details</h3>
-
-Bank : UNION BANK<br>
-Account Number : <b>020312120000010</b><br>
-IFSC : <b>UBIN0802034</b>
+<b>Bank :</b> UNION BANK<br>
+<b>Account Number :</b> 020312120000010<br>
+<b>IFSC :</b> UBIN0802034
 
 <br><br>
 
-<b>Enter UTR Number</b><br>
+<b>Total Amount :</b> ₹${total}
+
+<br><br>
+
+<label>Enter UTR Number :</label>
+
+<br><br>
 
 <input type="text" id="utr" placeholder="Enter UTR Number">
 
@@ -211,112 +292,25 @@ IFSC : <b>UBIN0802034</b>
 
 `;
 
-}
-
-function submitReval(){
-
-let utr=document.getElementById("utr").value;
-
-if(!utr){
-alert("Enter UTR Number");
-return;
-}
-
-let box=document.getElementById("resultBox");
-
-box.innerHTML=`
-
-<div class="student-info">
-
-<h2 style="color:green">Revaluation Submitted Successfully</h2>
-
-<b>UTR Number :</b> ${utr}
-
-<br><br>
-
-Your revaluation request has been recorded.
-
-</div>
-
-`;
-
-    }
-
-let reg=document.getElementById("regno").value.trim();
-let student=studentDB[reg];
-let box=document.getElementById("resultBox");
-
-if(!student){
-box.innerHTML="<h3 style='color:red'>Student Not Found</h3>";
-return;
-}
-
-let total=0;
-
-let html="";
-
-html+=`
-<div class="student-info">
-
-<b>Student Name :</b> ${student.name}<br>
-<b>Registration Number :</b> ${reg}
-
-<table>
-<tr>
-<th>Subject</th>
-<th>Marks</th>
-<th>Status</th>
-</tr>
-`;
-
-student.results.forEach(r=>{
-
-let status=r.res=="P"?"PASS":"FAIL";
-let cls=r.res=="P"?"pass":"fail";
-
-total+=r.total;
-
-html+=`
-<tr>
-<td>${r.name}</td>
-<td>${r.total}</td>
-<td class="${cls}">${status}</td>
-</tr>
-`;
-
-});
-
-html+=`</table>
-
-<h3>Total Marks : ${total}</h3>
-
-<div class="actions">
-<button onclick="window.print()">Print Result</button>
-<button onclick="downloadResult()">Download Result</button>
-</div>
-
-</div>
-`;
-
 box.innerHTML=html;
 
 }
 
-function downloadResult(){
+/* UTR SUBMIT */
 
-let content=document.getElementById("resultBox").innerText;
+function submitReval(){
 
-let blob=new Blob([content],{type:"text/plain"});
+let utr=document.getElementById("utr").value.trim();
 
-let a=document.createElement("a");
-
-a.href=URL.createObjectURL(blob);
-a.download="JKC_Result.txt";
-a.click();
-
+if(utr==""){
+alert("Please enter UTR number");
+return;
 }
 
-</script>
+alert("Revaluation Application Submitted Successfully");
 
-</body>
-</html>
+location.reload();
+
+    }
+
+
