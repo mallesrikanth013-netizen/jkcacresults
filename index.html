@@ -1,47 +1,153 @@
-<script>
-function showResult() {
+<!DOCTYPE html>
+<html>
+<head>
 
-let regNo = document.getElementById("regNo").value.trim();
-let resultArea = document.getElementById("result-area");
+<title>JKC College Results</title>
 
-if (!studentDB[regNo]) {
-resultArea.innerHTML = "<div class='error'>Result Not Found</div>";
-return;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f2f2;
+text-align:center;
 }
 
-let student = studentDB[regNo];
-let passCount = 0;
-let failCount = 0;
+.box{
+background:white;
+width:400px;
+margin:80px auto;
+padding:20px;
+border-radius:8px;
+box-shadow:0 0 10px gray;
+}
 
-let rows = "";
+input{
+padding:10px;
+width:200px;
+margin:10px;
+}
 
-student.results.forEach(sub => {
+button{
+padding:10px 20px;
+background:#1a237e;
+color:white;
+border:none;
+margin:5px;
+cursor:pointer;
+}
 
-let resClass = sub.res == "P" ? "green-text" : "red-text";
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
 
-if(sub.res=="P"){passCount++} else{failCount++}
+th,td{
+border:1px solid #ccc;
+padding:8px;
+}
 
-rows += `
+.pass{
+color:green;
+font-weight:bold;
+}
+
+.fail{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>JKC COLLEGE RESULTS PORTAL</h2>
+
+<div class="box">
+
+<input type="text" id="regNo" placeholder="Enter Hall Ticket">
+
+<br>
+
+<button onclick="showResult()">Check Result</button>
+
+</div>
+
+<div id="result-area"></div>
+
+<script>
+
+const studentDB={
+
+"250726":{
+name:"Sample Student",
+results:[
+{code:"1001",name:"English",cia:"24/40",see:"44/60",total:68,res:"P"},
+{code:"1002",name:"Sanskrit",cia:"20/40",see:"30/60",total:50,res:"P"},
+{code:"1003",name:"AI Fundamentals",cia:"22/40",see:"25/60",total:47,res:"P"}
+]
+},
+
+/* ======================
+ADD NEXT STUDENT HERE
+====================== */
+
+"250727":{
+name:"Next Student",
+results:[
+{code:"1001",name:"English",cia:"20/40",see:"30/60",total:50,res:"P"},
+{code:"1002",name:"Sanskrit",cia:"18/40",see:"20/60",total:38,res:"F"},
+{code:"1003",name:"AI Fundamentals",cia:"22/40",see:"30/60",total:52,res:"P"}
+]
+}
+
+};
+
+function showResult(){
+
+let reg=document.getElementById("regNo").value;
+
+let area=document.getElementById("result-area");
+
+if(!studentDB[reg]){
+
+area.innerHTML="<h3>Result Not Found</h3>";
+
+return;
+
+}
+
+let student=studentDB[reg];
+
+let rows="";
+
+student.results.forEach(s=>{
+
+let cls=s.res=="P"?"pass":"fail";
+
+rows+=`
 <tr>
-<td>${sub.code}</td>
-<td>${sub.name}</td>
-<td>${sub.cia}</td>
-<td>${sub.see}</td>
-<td>${sub.total}</td>
-<td class="${resClass}">${sub.res}</td>
+<td>${s.code}</td>
+<td>${s.name}</td>
+<td>${s.cia}</td>
+<td>${s.see}</td>
+<td>${s.total}</td>
+<td class="${cls}">${s.res}</td>
 </tr>
 `;
 
 });
 
-resultArea.innerHTML = `
+area.innerHTML=`
 
-<div class="card" id="resultCard">
+<div id="resultCard">
 
-<div class="student-title">
-Name : ${student.name} <br>
-Hall Ticket : ${regNo}
-</div>
+<h3>${student.name}</h3>
+<h4>Hall Ticket : ${reg}</h4>
 
 <table>
 
@@ -58,122 +164,48 @@ ${rows}
 
 </table>
 
-<div class="summary">
-
-<div class="summary-item">
-<div class="label">PASS</div>
-<div class="value pass-value">${passCount}</div>
-</div>
-
-<div class="summary-item">
-<div class="label">FAIL</div>
-<div class="value fail-value">${failCount}</div>
-</div>
-
-</div>
-
 <br>
 
 <button onclick="printResult()">Print</button>
 
-<button onclick="downloadResult()">Download</button>
+<button onclick="downloadResult()">Download PDF</button>
 
-<button onclick="applyRevaluation()">Apply Revaluation</button>
+<button onclick="revaluation()">Apply Revaluation</button>
 
 </div>
 
 `;
 
 }
-  <script>
 
 function printResult(){
 
-let content = document.getElementById("resultCard").innerHTML;
+let data=document.getElementById("resultCard").innerHTML;
 
-let printWindow = window.open('', '', 'width=900,height=650');
+let w=window.open();
 
-printWindow.document.write("<html><head><title>Result</title></head><body>");
-printWindow.document.write(content);
-printWindow.document.write("</body></html>");
+w.document.write(data);
 
-printWindow.document.close();
-printWindow.print();
+w.print();
 
 }
-
-</script>
-<script>
 
 function downloadResult(){
 
-let element = document.getElementById("resultCard");
+let element=document.getElementById("resultCard");
 
-let opt = {
-margin:1,
-filename:'JKC_Result.pdf',
-image:{ type:'jpeg', quality:0.98 },
-html2canvas:{ scale:2 },
-jsPDF:{ unit:'in', format:'letter', orientation:'portrait' }
-};
+html2pdf().from(element).save("JKC_Result.pdf");
 
-html2pdf().set(opt).from(element).save();
+}
+
+function revaluation(){
+
+alert("Revaluation fee ₹200 per subject");
 
 }
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
 
-function applyRevaluation(){
+</body>
 
-let fee = 200;
-
-let confirmPay = confirm("Revaluation fee ₹200 per subject. Continue?");
-
-if(confirmPay){
-
-alert("Revaluation Application Submitted Successfully");
-
-}
-
-}
-
-</script>
-<script>
-
-const studentDB = {
-
-"250726": {
-name: "STUDENT NAME",
-results: [
-{code:"100125", name:"ENGLISH", cia:"24/40", see:"44/60", total:68, res:"P"},
-{code:"100225", name:"SANSKRIT", cia:"28/40", see:"40/60", total:68, res:"P"},
-{code:"101125", name:"AI FUNDAMENTALS", cia:"31/40", see:"37/60", total:68, res:"P"},
-{code:"111925", name:"COMPUTER FUNDAMENTALS", cia:"24/40", see:"24/60", total:48, res:"P"},
-{code:"112025", name:"PROBLEM SOLVING USING C", cia:"19/40", see:"28/60", total:47, res:"P"}
-]
-},
-
-/* ===========================
-ADD NEXT STUDENT DATA HERE
-=========================== */
-
-"250727": {
-name: "NEXT STUDENT NAME",
-results: [
-{code:"100125", name:"ENGLISH", cia:"25/40", see:"30/60", total:55, res:"P"},
-{code:"100225", name:"SANSKRIT", cia:"28/40", see:"20/60", total:48, res:"P"},
-{code:"101125", name:"AI FUNDAMENTALS", cia:"30/40", see:"35/60", total:65, res:"P"},
-{code:"111925", name:"COMPUTER FUNDAMENTALS", cia:"20/40", see:"25/60", total:45, res:"P"},
-{code:"112025", name:"PROBLEM SOLVING USING C", cia:"22/40", see:"27/60", total:49, res:"P"}
-]
-}
-
-/* ===========================
-ADD NEXT STUDENT DATA HERE
-=========================== */
-
-};
-
-  </script>
+</html>
