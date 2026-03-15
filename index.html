@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>JKC College Results Portal</title>
@@ -113,10 +113,10 @@ results:[
 {code:"1120P25",name:"C LAB",total:30,res:"P"}
 ]
 }
- // Next student data will be add here 
-  
+
 };
-    function showResult(){
+
+function showResult(){
 
 let reg=document.getElementById("regno").value.trim();
 let student=studentDB[reg];
@@ -126,6 +126,8 @@ if(!student){
 box.innerHTML="<h3 style='color:red'>Student Not Found</h3>";
 return;
 }
+
+let total=0;
 
 let html="";
 
@@ -137,9 +139,8 @@ html+=`
 
 <table>
 <tr>
-<th>Code</th>
 <th>Subject</th>
-<th>Total</th>
+<th>Marks</th>
 <th>Status</th>
 </tr>
 `;
@@ -149,9 +150,10 @@ student.results.forEach(r=>{
 let status=r.res=="P"?"PASS":"FAIL";
 let cls=r.res=="P"?"pass":"fail";
 
+total+=r.total;
+
 html+=`
 <tr>
-<td>${r.code}</td>
 <td>${r.name}</td>
 <td>${r.total}</td>
 <td class="${cls}">${status}</td>
@@ -162,97 +164,19 @@ html+=`
 
 html+=`</table>
 
-<div class="actions">
-
-<button onclick="window.print()">Print Result</button>
-<button onclick="downloadResult()">Download Result</button>
-
-</div>
-
-</div>
-`;
-
-box.innerHTML=html;
-
-    }
-
-student.results.forEach(r=>{
-
-let status=r.res=="P"?"PASS":"FAIL";
-let cls=r.res=="P"?"pass":"fail";
-
-html+=`
-<tr>
-<td>${r.code}</td>
-<td>${r.name}</td>
-<td>${r.cia}</td>
-<td>${r.see}</td>
-<td>${r.total}</td>
-<td class="${cls}">${status}</td>
-</tr>
-`;
-
-});
-
-html+=`</table>
+<h3>Total Marks : ${total}</h3>
 
 <div class="actions">
-
 <button onclick="window.print()">Print Result</button>
-
 <button onclick="downloadResult()">Download Result</button>
-
 </div>
 
 </div>
-`;
-
-/* REVALUATION SECTION */
-
-html+=`
-
-<div class="reval-box">
-
-<h3>Apply For Revaluation</h3>
-
-<b>Registration Number :</b> ${reg}
-
-<br><br>
-
-`;
-
-student.results.forEach((r,i)=>{
-
-html+=`
-<div class="subject-row">
-
-<label>
-<input type="checkbox" class="revsub" value="${r.name}">
-${r.name}
-</label>
-
-<span>₹750</span>
-
-</div>
-`;
-
-});
-
-html+=`
-
-<br>
-
-<button onclick="applyRevaluation('${reg}')">Proceed To Payment</button>
-
-</div>
-
 `;
 
 box.innerHTML=html;
 
 }
-
-/* DOWNLOAD RESULT */
 
 function downloadResult(){
 
@@ -263,83 +187,12 @@ let blob=new Blob([content],{type:"text/plain"});
 let a=document.createElement("a");
 
 a.href=URL.createObjectURL(blob);
-
 a.download="JKC_Result.txt";
-
 a.click();
 
 }
 
-/* PAYMENT PAGE */
+</script>
 
-function applyRevaluation(reg){
-
-let subjects=document.querySelectorAll(".revsub:checked");
-
-if(subjects.length==0){
-alert("Please select at least one subject");
-return;
-}
-
-let total=subjects.length*750;
-
-let box=document.getElementById("resultBox");
-
-let html="";
-
-html+=`
-
-<div class="reval-box">
-
-<h2>Revaluation Payment</h2>
-
-<b>Registration Number :</b> ${reg}
-
-<br><br>
-
-<b>Bank :</b> UNION BANK<br>
-<b>Account Number :</b> 020312120000010<br>
-<b>IFSC :</b> UBIN0802034
-
-<br><br>
-
-<b>Total Amount :</b> ₹${total}
-
-<br><br>
-
-<label>Enter UTR Number :</label>
-
-<br><br>
-
-<input type="text" id="utr" placeholder="Enter UTR Number">
-
-<br><br>
-
-<button onclick="submitReval()">Submit Payment</button>
-
-</div>
-
-`;
-
-box.innerHTML=html;
-
-}
-
-/* UTR SUBMIT */
-
-function submitReval(){
-
-let utr=document.getElementById("utr").value.trim();
-
-if(utr==""){
-alert("Please enter UTR number");
-return;
-}
-
-alert("Revaluation Application Submitted Successfully");
-
-location.reload();
-
-    }
-
-
+</body>
+</html>
