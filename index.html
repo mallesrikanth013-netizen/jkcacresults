@@ -61,7 +61,46 @@ border-radius:6px;
 box-shadow:0 0 5px #ccc;
 text-align:left;
 }
+html+=`
 
+<div class="reval-box">
+
+<h3>Apply For Revaluation</h3>
+
+<b>Registration Number :</b> ${reg}
+
+<br><br>
+
+`;
+
+student.results.forEach(r=>{
+
+html+=`
+
+<div class="subject-row">
+
+<label>
+<input type="checkbox" class="revsub" value="${r.name}">
+${r.name}
+</label>
+
+<span>₹750</span>
+
+</div>
+
+`;
+
+});
+
+html+=`
+
+<br>
+
+<button onclick="applyRevaluation('${reg}')">Proceed To Payment</button>
+
+</div>
+
+`;
 .subject-row{
 display:flex;
 justify-content:space-between;
